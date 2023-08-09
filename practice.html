@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Live Output</h2>
+    <div class="output">
+        <input id="text">
+        <button type="button" onclick="nameCheck()">Submit</button>
+    
+        <p class="admitted">Guestlist: </p>
+        <p class="refused">Refuse: </p>
+    </div>
+    <script>
+        function nameCheck(){
+            let name = document.getElementById("text").value;
+                if(name === "Phil"|| name==="Lola"){
+                    refuse.textContent += name;
+                }else{
+                    guestList.textContent += name;
+                }
+            }
+    </script>
+    <script>
+        const peopleList = ["Greg", "Sam", "Peter", "Jeff", "Kim", "Paul", "Phil", "Steve", "Leo","Nami","Teemo","Lola", "Janna", "Yi","Panth"];
+        let guestList = document.querySelector(".admitted");
+        let refuse = document.querySelector(".refused");
+        guestList.textContent = "Admit: ";
+        refuse.textContent = "Refuse: ";
+
+        peopleList.push(document.getElementById("text").value);
+
+
+        for(let i = 0; i<peopleList.length;i++){
+            if(peopleList[i]==="Phil" || peopleList[i]==="Lola"){
+                refuse.textContent += ` ${peopleList[i]}`;
+            }else{
+                guestList.textContent += ` ${peopleList[i]}`;
+            }
+        }
+        console.log(guestList);
+        console.log(refuse);
+        
+        
+   </script>
+</body>
+</html>
