@@ -1,6 +1,5 @@
 function getComputerChoice() {
     let decision = Math.floor(Math.random() * 3)+1;
-    console.log(decision);
     if (decision === 3){
         console.log("Rock");
         return "rock";
@@ -12,9 +11,8 @@ function getComputerChoice() {
     else{
         console.log("Scissors");
         return "scissors";
-    }
+    }  
 }
-
 function startGame(playerSelection,computerSelection){
     if(playerSelection===computerSelection){
         return "Tie Game"
@@ -40,10 +38,44 @@ function startGame(playerSelection,computerSelection){
     }
 }
 
-let playTimes = prompt("How many times do you want to play?")
-for (let i= 0; i<playTimes;i++){
-    let playerSelection = prompt("Type rock, paper, or scissors").toLowerCase();
-    console.log("player = " + playerSelection);
-    let computerSelection = getComputerChoice();
-    console.log(startGame(playerSelection, computerSelection));
-}
+
+const buttons = document.querySelectorAll("button.btn");
+console.log(buttons);
+let playerSelection;
+let playerWins = 0;
+let computerWins = 0;
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+    playerSelection=button.id;  
+    if(playerWins === 5){
+        console.log("Congratulations! Player Wins!");
+    }else if(computerWins ===5){
+        console.log("Comp Wins :(");
+    } else{
+        console.log("player = " + playerSelection);
+        let computerSelection = getComputerChoice();
+        console.log(startGame(playerSelection, computerSelection));
+        
+        if(startGame(playerSelection, computerSelection).includes("win")){
+            playerWins++;
+            console.log("player win = "+ playerWins);
+        } else if(startGame(playerSelection, computerSelection).includes("Tie")){
+            console.log(playerWins,computerWins);
+        }
+        else{
+            computerWins ++;
+            console.log("computer win = " + computerWins)
+        }; 
+    }
+    
+  
+            
+    })
+
+        
+    });
+    
+    
+    
+
