@@ -51,7 +51,7 @@ buttons.forEach((button) => {
     if(playerWins === 5){
         console.log("Congratulations! Player Wins!");
     }else if(computerWins ===5){
-        console.log("Comp Wins :(");
+        console.log("Comp Wins :(");        
     } else{
         console.log("player = " + playerSelection);
         let computerSelection = getComputerChoice();
