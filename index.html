@@ -1,18 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="C:\Users\harry\Documents\GitHub\test\prototype.js" defer></script>
+  <link rel="stylesheet" href="C:\Users\harry\Documents\GitHub\test\prototype.css" defer>
+  <title>Records Library</title>
+</head>
 <body>
-  <head>
-    <script src="C:\Users\harry\Documents\GitHub\test\learningDOM.js" defer></script>
-  </head>
-    <h1>
-      Work in progress 
-    </h1>
-    <div id="exercise"> </div>
-    <div id="BP"></div>
-    <div id="div"></div>
+  <div class="container"></div>
+    <h1>Library</h1>
+    <hr>
+    <h3>Harry Chen</h3>    
+    <div>
+      <!-- <button class="popup"></button> -->
+      <div id="popupBox" onclick="popup">
+        <span class="popuptext" id="popupBox"></span>
+      </div>
+      <br>
+      <form id="form">
+        <input type="text" name="title" id="title" placeholder="Title"><br>
+        <input type="text" name="author" id="author" placeholder="Author"><br>
+        <input type="number" name="page" id="page" placeholder="Page"><br>
+        <label for="read">Have Read?</label>
+        <input type="checkbox" name="read" id="read" >
+        <input type="submit" id="submit" value="submit">
+      </form>
 
-    <div class="container">
-      <button id="1">Click me</button>
-      <button id="2">Click me</button>
-      <button id="3">Click me</button>
+      <div id="bookLibrary"></div>
+
     </div>
-
-  </body>
+</body>
