@@ -8,32 +8,33 @@ let myLibrary = [];
 
 submitGrabber.addEventListener('submit', function(event){
   event.preventDefault();
+  const id = myLibrary.length;
   const title = titleGrabber.value;
   const author = authorGrabber.value;
   const page = pageGrabber.value;
   const read = readGrabber.checked;
 
-  console.table([title,author,page,read]);
-  let book = createNewBook(title,author,page,read);
+  console.table([id,title,author,page,read]);
+  let book = createNewBook(id,title,author,page,read);
   myLibrary = [...myLibrary];
 
-  console.log(myLibrary.length);
+  console.log();
   
   myLibrary.push(book);
   book.createBookCard();
-  changeReadStatus();
   resetValues();
 })
 
-function Book(title, author, page, read){
+function Book(id,title, author, page, read){
+  this.id = id;
   this.title = title;
   this.author = author;
   this.page = page;
   this.read = read;
 }
 
-function createNewBook(title,author,page,read){
-  return new Book(title, author, page, read)
+function createNewBook(id, title,author,page,read){
+  return new Book(id, title, author, page, read)
 }
 
 //selected from HTML
@@ -44,7 +45,7 @@ Book.prototype.createBookCard = function(){
     
   let motherDiv = document.createElement('div');
     motherDiv.className = "child";
-    // motherDiv.classList.add(motherDiv);
+    motherDiv.id = myLibrary.length;
 
       let divTitle = document.createElement('div');
       divTitle.textContent = `Title: ${myLibrary[myLibrary.length - 1].title}`;
@@ -58,8 +59,9 @@ Book.prototype.createBookCard = function(){
       divPage.textContent = `Page Number: ${myLibrary[myLibrary.length - 1].page}`;
       motherDiv.appendChild(divPage);
 
-      motherDiv.appendChild(readStatus())
+      motherDiv.appendChild(readStatus());
       motherDiv.appendChild(deletePost());
+      motherDiv.appendChild(changeReadStatus());
       bookLibrary.appendChild(motherDiv);
 
       // changeReadStatus();
@@ -67,25 +69,35 @@ Book.prototype.createBookCard = function(){
   }
 function readStatus(){
   let readPage = document.createElement('div');
-  readPage.id = myLibrary.length;
+  readPage.id = "Read Status: " + myLibrary.length;
   readPage.textContent = `Read Status: ${myLibrary[myLibrary.length - 1].read}`;
   return readPage;
 }
 
-function changeReadStatus(event){
-  let readStatusChange = event.currentTarget;
-  document.getElementsByClassName("child").innerHTML = readStatusChange;
-  console.log(readStatusChange);
+function changeReadStatus(){
+  const readButtonChange = document.createElement('button');
+  readButtonChange.innerText = "Change Read Status";
+  readButtonChange.onclick = (event) => {
+    let bookId = event.target.parentNode.id;
+    console.log("book id = " + bookId);
+    myLibrary[bookId-1].read = !myLibrary[bookId-1].read;
+    console.log(myLibrary[bookId-1].read);
+
+    const readStatus = document.querySelector(`[data-id="Read Status: ${bookId}"]`);
+    readStatus.textContent = `Read Status: ${myLibrary[myLibrary.length - 1].read}`;
+   }
+
+  return readButtonChange;
 }
 
 function deletePost(){
   let deleteButton = document.createElement('BUTTON');
   deleteButton.innerText = "Delete Book";
-  deleteButton.id = "Delete Post " + myLibrary.length.toString();
-  deleteButton.onclick = function(){
+  deleteButton.id = myLibrary.length.toString();
+  deleteButton.onclick = (event) => {
     this.parentNode.parentNode.removeChild(this.parentNode);
-
-  } 
+    
+  }
   return deleteButton;
 }
 
