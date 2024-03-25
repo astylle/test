@@ -83,7 +83,7 @@ function changeReadStatus(){
     myLibrary[bookId-1].read = !myLibrary[bookId-1].read;
     console.log(myLibrary[bookId-1].read);
 
-    const readStatus = document.querySelector(`[data-id="Read Status: ${bookId}"]`);
+    const readStatus = document.querySelector(`[id="Read Status: ${bookId}"]`);
     readStatus.textContent = `Read Status: ${myLibrary[myLibrary.length - 1].read}`;
    }
 
