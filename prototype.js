@@ -16,89 +16,97 @@ submitGrabber.addEventListener('submit', function(event){
 
   console.table([id,title,author,page,read]);
   let book = createNewBook(id,title,author,page,read);
-  myLibrary = [...myLibrary];
 
-  console.log();
-  
   myLibrary.push(book);
   book.createBookCard();
+
   resetValues();
 })
 
-function Book(id,title, author, page, read){
-  this.id = id;
-  this.title = title;
-  this.author = author;
-  this.page = page;
-  this.read = read;
+class Book {
+  constructor(id,title,author,page,read){
+    this.id = id;
+    this.title = title;
+    this.author = author;
+    this.page = page;
+    this.read = read;
+  }
+  
+  get divTitle(){
+    let divTitle = document.createElement('div');
+    divTitle.textContent = `Title: ${myLibrary[this.id].title}`;
+    return divTitle;
+  }
+
+  get divAuthor(){
+    let divAuthor = document.createElement('div');
+    divAuthor.textContent =  `Author: ${myLibrary[this.id].author}`;
+    return divAuthor;
+  }
+
+  get divPage(){
+    let divPage = document.createElement('div');
+    divPage.textContent = `Page Number: ${myLibrary[this.id].page}`;
+    return divPage;
+  }
+
+  get readPage(){
+    let readPage = document.createElement('div');
+    readPage.id = "Read Status: " + myLibrary.length;
+    readPage.textContent = `Read Status: ${myLibrary[this.id].read}`;
+    return readPage;
+  }
+
+  get readButtonChange(){
+    let readButtonChange = document.createElement('button');
+    readButtonChange.innerText = "Change Read Status";
+    readButtonChange.onclick = (event) => {
+      let bookId = event.target.parentNode.id;
+      console.log("book id = " + bookId);
+      myLibrary[bookId-1].read = !myLibrary[bookId-1].read;
+      console.log(myLibrary[bookId-1].read);
+      const readStatus = document.querySelector(`[id="Read Status: ${bookId}"]`);
+      readStatus.textContent = `Read Status: ${myLibrary[this.id].read}`;
+    }
+    return readButtonChange;
+  }
+
+  get deleteButton(){
+    let deleteButton = document.createElement("button");
+    deleteButton.innerText = "Delete Book";
+    deleteButton.id = this.id.toString();
+    deleteButton.onclick = (event) => {
+      let bookCard = event.target.parentNode;
+      console.log(bookCard);
+      const bookId = parseInt(this.id);
+      myLibrary.splice(bookId, 1);
+      bookCard.remove();
+    }
+    return deleteButton;
+  }
+
+  createBookCard(){
+  //selected from HTML
+  const bookLibrary = document.querySelector("#bookLibrary") 
+
+    let motherDiv = document.createElement('div');
+    motherDiv.className = "child";
+    motherDiv.id = myLibrary.length;
+
+      motherDiv.appendChild(this.divTitle);
+      motherDiv.appendChild(this.divAuthor);
+      motherDiv.appendChild(this.divPage);
+      motherDiv.appendChild(this.readPage);
+      motherDiv.appendChild(this.readButtonChange);
+      motherDiv.appendChild(this.deleteButton);
+
+      bookLibrary.appendChild(motherDiv);
+  }
+
 }
 
 function createNewBook(id, title,author,page,read){
   return new Book(id, title, author, page, read)
-}
-
-//selected from HTML
-const bookLibrary = document.querySelector("#bookLibrary")
-const addBook = document.querySelector('#addBook');
- 
-Book.prototype.createBookCard = function(){
-    
-  let motherDiv = document.createElement('div');
-    motherDiv.className = "child";
-    motherDiv.id = myLibrary.length;
-
-      let divTitle = document.createElement('div');
-      divTitle.textContent = `Title: ${myLibrary[myLibrary.length - 1].title}`;
-      motherDiv.appendChild(divTitle);
-      
-      let divAuthor = document.createElement('div');
-      divAuthor.textContent =  `Author: ${myLibrary[myLibrary.length - 1].author}`;
-      motherDiv.appendChild(divAuthor);
-
-      let divPage = document.createElement('div');
-      divPage.textContent = `Page Number: ${myLibrary[myLibrary.length - 1].page}`;
-      motherDiv.appendChild(divPage);
-
-      motherDiv.appendChild(readStatus());
-      motherDiv.appendChild(deletePost());
-      motherDiv.appendChild(changeReadStatus());
-      bookLibrary.appendChild(motherDiv);
-
-      // changeReadStatus();
-      
-  }
-function readStatus(){
-  let readPage = document.createElement('div');
-  readPage.id = "Read Status: " + myLibrary.length;
-  readPage.textContent = `Read Status: ${myLibrary[myLibrary.length - 1].read}`;
-  return readPage;
-}
-
-function changeReadStatus(){
-  const readButtonChange = document.createElement('button');
-  readButtonChange.innerText = "Change Read Status";
-  readButtonChange.onclick = (event) => {
-    let bookId = event.target.parentNode.id;
-    console.log("book id = " + bookId);
-    myLibrary[bookId-1].read = !myLibrary[bookId-1].read;
-    console.log(myLibrary[bookId-1].read);
-
-    const readStatus = document.querySelector(`[id="Read Status: ${bookId}"]`);
-    readStatus.textContent = `Read Status: ${myLibrary[myLibrary.length - 1].read}`;
-   }
-
-  return readButtonChange;
-}
-
-function deletePost(){
-  let deleteButton = document.createElement('BUTTON');
-  deleteButton.innerText = "Delete Book";
-  deleteButton.id = myLibrary.length.toString();
-  deleteButton.onclick = (event) => {
-    this.parentNode.parentNode.removeChild(this.parentNode);
-    
-  }
-  return deleteButton;
 }
 
 function resetValues(){
